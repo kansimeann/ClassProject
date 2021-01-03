@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.kansimeannet">
+<!--    permission to use internet for GPS services-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--Permissions to access user location--><uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<!--    Permission to access boot completed reciver and trace user movements-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /><uses-permission android:name="android.permission.REBOOT"  tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+<!--        Home activity where user message is diplayed-->
+        <activity android:name=".HomeActivity"></activity>
+<!--        Message activity where user enters their greeting message that must be above 5 characters and starts the home activity-->
+        <activity android:name=".MessageActivity" />
+<!--        Splash activity that automatically finishes to the message activity after 2 seconds-->
+        <activity android:name=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+<!--This service is meant to track user location based on longitude and latitude using GPS. User is supposed to allow gps permission for its performance-->
+        <service android:name=".TraceMovemenentService" android:enabled="true">
+        </service>
+<!--        Reciver to know when phone has started and start tracing location-->
+        <receiver
+            android:name=".PhoneStartedReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
